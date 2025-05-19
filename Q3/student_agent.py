@@ -27,4 +27,4 @@ class Agent(object):
         self.agent = SACAgent()
         load_checkpoint(self.agent, 'checkpoints/sac_checkpoint_ep_600.pt')
     def act(self, observation):
-        return self.agent.select_action(observation,True)
+        return self.agent.select_action(observation, True)
