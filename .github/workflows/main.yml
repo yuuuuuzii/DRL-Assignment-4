@@ -30,7 +30,7 @@ jobs:
 
     - name: 3. Download model from Google Drive
       run: |
-        gdown --id 1mYCodKv0yYQOffNnJKzBlFX_76sZYj58 -O Q3/checkpoints/sac_checkpoint_ep_600.pt
+        gdown --id 1mYCodKv0yYQOffNnJKzBlFX_76sZYj58 -O Q3/sac_checkpoint_ep_600.pt
 
     - name: 4. Run Evaluation
       run: |
