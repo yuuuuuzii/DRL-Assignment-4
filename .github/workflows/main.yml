@@ -26,8 +26,13 @@ jobs:
     - name: 2. Installing dependencies
       run: |
         pip install -r requirements.txt
+        pip install gdown
 
-    - name: 3. Run Evaluation
+    - name: 3. Download model from Google Drive
+      run: |
+        gdown --id 1mYCodKv0yYQOffNnJKzBlFX_76sZYj58 -O Q3/checkpoints/sac_checkpoint_ep_600.pt
+
+    - name: 4. Run Evaluation
       run: |
         cd Q3/
         chmod +x eval.cpython-310-x86_64-linux-gnu.so
