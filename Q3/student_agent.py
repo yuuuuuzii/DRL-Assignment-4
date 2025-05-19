@@ -25,6 +25,6 @@ class Agent(object):
     def __init__(self):
         self.action_space = gym.spaces.Box(-1.0, 1.0, (21,), np.float64)
         self.agent = SACAgent()
-        load_checkpoint(self.agent, 'sac_checkpoint_ep_998.pt')
+        load_checkpoint(self.agent, 'sac_checkpoint_ep_1048.pt')
     def act(self, observation):
         return self.agent.select_action(observation, True)
