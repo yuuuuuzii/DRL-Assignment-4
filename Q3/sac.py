@@ -13,7 +13,6 @@ class SACAgent:
     def __init__(self, device=None):
         self.state_dim  = 67
         self.action_dim = 21
-
         self.device = device or torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         self.actor         = Actor(self.state_dim, self.action_dim).to(self.device)
@@ -62,14 +61,14 @@ class SACAgent:
             target_value = reward + (1 - done) * self.gamma * (torch.min(target_q1, target_q2) - alpha * next_log_prob)
 
         q1 ,q2 = self.critic(state, action)
-        critic_loss = nn.MSELoss()(q1, target_value)+nn.MSELoss()(q2, target_value)
+        critic_loss = nn.MSELoss()(q1, target_value)+ nn.MSELoss()(q2, target_value)
         
-        # Update critics
+      
         self.critic_optimizer.zero_grad()
         critic_loss.backward()
         self.critic_optimizer.step()
 
-        # Actor loss
+        ## Actor loss
         action_pi, log_prob_pi = self.actor.sample(state)
         q1_pi ,q2_pi = self.critic(state, action_pi)
   

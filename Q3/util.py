@@ -23,7 +23,7 @@ class Actor(nn.Module):
             nn.ReLU(),
         )
    
-        self.mean_layer    = nn.Linear(512, action_dim)
+        self.mean_layer = nn.Linear(512, action_dim)
         self.log_std_layer = nn.Linear(512, action_dim)
 
     def forward(self, state):
@@ -31,21 +31,20 @@ class Actor(nn.Module):
         mean = self.mean_layer(x)
         log_std = self.log_std_layer(x)
         log_std = torch.clamp(log_std, LOG_STD_MIN, LOG_STD_MAX)
-        std = torch.exp(log_std)
 
-        return mean, std
+        return mean, torch.exp(log_std)
 
     def sample(self, state):
 
         mean, std = self.forward(state)
 
         dist = torch.distributions.Normal(mean, std)
-        z    = dist.rsample()            
-        action    = torch.tanh(z)                
+        z = dist.rsample()            
+        action = torch.tanh(z)                
     
         log_prob = dist.log_prob(z)      
         log_prob -= torch.log((1 - action.pow(2)) + EPS)
-        log_prob = log_prob.sum(dim=-1, keepdim=True)
+        log_prob = log_prob.sum(dim = -1, keepdim=True)
 
         return action, log_prob
 
